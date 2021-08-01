@@ -33,8 +33,11 @@ jobs:
     - name: Install dependencies
       run: dotnet restore ${{ env.SOLUTION_FILE }}
 
+    - name: Make destination directory for compiled CSS
+      run: mkdir -vp src/LostHarbor.Game/wwwroot/css
+
     - name: Transpile SCSS files
-      uses: gha-utilities/sass-build@v0.2.3
+      uses: gha-utilities/sass-build@v0.4.4
       with:
         source: src/LostHarbor.Game/Styles/styles.scss
         destination: src/LostHarbor.Game/wwwroot/css/styles.css
