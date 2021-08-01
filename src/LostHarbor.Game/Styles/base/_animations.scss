@@ -1,0 +1,25 @@
+@include keyframes(indeterminate-progress) {
+  0% {
+    transform: translateX(0) scaleX(0);
+  }
+  40% {
+    transform: translateX(0) scaleX(0.4);
+  }
+  100% {
+    transform: translateX(100%) scaleX(0.5);
+  }
+}
+
+@mixin text-change-animation($animation-name, $text-list) {
+  @include keyframes($animation-name) {
+    $length: length($text-list) - 1;
+
+    @each $text in $text-list {
+      $percent: ((index($text-list, $text) - 1) / $length) * 100%;
+
+      #{$percent} {
+        content: $text;
+      }
+    }
+  }
+}

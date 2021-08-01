@@ -1,0 +1,140 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build-blazor",
+      "type": "process",
+      "group": "build",
+      "problemMatcher": "$msCompile",
+      "windows": {
+        "command": "${workspaceFolder}/scripts/build-blazor.cmd"
+      },
+      "osx": {
+        "command": "${workspaceFolder}/scripts/build-blazor.sh"
+      },
+      "presentation": {
+        "reveal": "never",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "watch-blazor",
+      "type": "process",
+      "group": "build",
+      "problemMatcher": "$msCompile",
+      "windows": {
+        "command": "${workspaceFolder}/scripts/watch-blazor.cmd"
+      },
+      "osx": {
+        "command": "${workspaceFolder}/scripts/watch-blazor.sh"
+      },
+      "presentation": {
+        "panel": "dedicated",
+        "clear": true
+      }
+    },
+    {
+      "label": "publish-blazor",
+      "type": "process",
+      "group": "build",
+      "problemMatcher": "$msCompile",
+      "windows": {
+        "command": "${workspaceFolder}/scripts/publish-blazor.cmd"
+      },
+      "osx": {
+        "command": "${workspaceFolder}/scripts/publish-blazor.sh"
+      },
+      "presentation": {
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "build-sass",
+      "type": "process",
+      "group": "build",
+      "problemMatcher": [],
+      "windows": {
+        "command": "${workspaceFolder}/scripts/build-sass.cmd"
+      },
+      "osx": {
+        "command": "${workspaceFolder}/scripts/build-sass.sh"
+      },
+      "presentation": {
+        "reveal": "never",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "watch-sass",
+      "type": "process",
+      "group": "build",
+      "problemMatcher": [],
+      "windows": {
+        "command": "${workspaceFolder}/scripts/watch-sass.cmd"
+      },
+      "osx": {
+        "command": "${workspaceFolder}/scripts/watch-sass.sh"
+      },
+      "presentation": {
+        "panel": "dedicated",
+        "clear": true
+      }
+    },
+    {
+      "label": "watch-parallel",
+      "dependsOn": ["watch-sass", "watch-blazor"],
+      "dependsOrder": "parallel",
+      "group": "build",
+      "problemMatcher": ["$msCompile"],
+      "isBackground": true
+    },
+    {
+      "label": "watch",
+      "dependsOn": ["build-sass", "watch-parallel"],
+      "dependsOrder": "sequence",
+      "group": "build",
+      "problemMatcher": ["$msCompile"],
+      "isBackground": true
+    },
+    {
+      "label": "build",
+      "dependsOn": ["build-sass", "build-blazor"],
+      "dependsOrder": "sequence",
+      "group": "build",
+      "problemMatcher": ["$msCompile"],
+      "isBackground": true
+    },
+    {
+      "label": "util-free-ports",
+      "type": "process",
+      "group": "none",
+      "problemMatcher": [],
+      "windows": {
+        "command": ""
+      },
+      "osx": {
+        "command": "${workspaceFolder}/scripts/free-ports.sh"
+      },
+      "presentation": {
+        "reveal": "never",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "util-clean-css",
+      "type": "process",
+      "group": "none",
+      "problemMatcher": [],
+      "windows": {
+        "command": "${workspaceFolder}/scripts/clean-css.cmd"
+      },
+      "osx": {
+        "command": "${workspaceFolder}/scripts/clean-css.sh"
+      },
+      "presentation": {
+        "reveal": "never",
+        "panel": "shared"
+      }
+    }
+  ]
+}

@@ -16,6 +16,11 @@ You should have received a copy of the GNU Affero General Public License along w
 If not, see <https://www.gnu.org/licenses/>.
 -->
 
+<!--
+This file is puely for use while designing or editing the loader. Any changes made should be copied
+to index.html.
+-->
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -27,12 +32,6 @@ If not, see <https://www.gnu.org/licenses/>.
     <title>Lost Harbor</title>
     <base href="/" />
     <link href="css/styles.css" rel="stylesheet" />
-    <link href="_content/LostHarbor.UX/css/styles.css" rel="stylesheet" />
-    <link href="LostHarbor.Game.styles.css" rel="stylesheet" />
-    <link href="manifest.json" rel="manifest" />
-    <link rel="apple-touch-icon" sizes="512x512" href="assets/icon-512.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/icon-32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/icon-16.png" />
   </head>
 
   <body>
@@ -53,18 +52,6 @@ If not, see <https://www.gnu.org/licenses/>.
       </div>
     </div>
 
-    <div id="blazor-error-ui">
-      <div class="container">
-        <div class="message">
-          An unhandled error has occurred.
-          <a href="" class="reload">Reload</a>
-        </div>
-        <div class="dismiss"><a>X</a></div>
-      </div>
-    </div>
-    <script src="_framework/blazor.webassembly.js"></script>
-    <script>
-      navigator.serviceWorker.register("service-worker.js");
-    </script>
+    <!-- blazor-error-ui and scripts go here -->
   </body>
 </html>

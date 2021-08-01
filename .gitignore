@@ -1,0 +1,23 @@
+# Build
+[Bb]in/
+[Oo]bj/
+
+# Sass-only
+**/*.css
+**/*.css.map
+
+# VS Code
+**/.vscode/*
+!**/.vscode/extensions.json
+!**/.vscode/launch.json
+!**/.vscode/project.code-snippets
+!**/.vscode/settings.json
+!**/.vscode/tasks.json
+**/.history
+.vs/
+
+# Misc
+.DS_Store
+Thumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/

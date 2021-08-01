@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "ms-dotnettools.csharp",
+    "ms-dotnettools.blazorwasm-companion",
+    "editorconfig.editorconfig",
+    "esbenp.prettier-vscode",
+    "bierner.markdown-mermaid"
+  ]
+}
