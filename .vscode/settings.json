@@ -3,9 +3,9 @@
     "**/.git": true,
     "**/.vs": true,
     "**/bin": true,
-    "**/obj": true,
-    "**/*.css": true,
-    "**/*.css.map": true
+    "**/obj": true
+    // "**/*.css": true,
+    // "**/*.css.map": true
   },
   "editor.rulers": [100, 120],
   "editor.occurrencesHighlight": false,

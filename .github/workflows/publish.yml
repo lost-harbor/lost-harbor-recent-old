@@ -1,0 +1,81 @@
+name: Publish Release
+
+on:
+  release:
+    types: [published]
+
+env:
+  TAG_NAME: ${{ github.event.release.tag_name }}
+  SOLUTION_FILE: LostHarbor.sln
+  TEST_SOLUTION_FILE: LostHarbor.Tests.sln
+  PUBLISH_DIR: build
+  RELEASE_DIR: build/wwwroot
+  REPOSITORY_NAME: lost-harbor/lost-harbor.github.io
+  COMMIT_MESSAGE: Publish Release ${{ github.event.release.tag_name }}
+  UPLOAD_URL: ${{ github.event.release.upload_url }}
+
+jobs:
+  build:
+    name: Publish
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+
+    - name: Install dependencies
+      run: dotnet restore ${{ env.SOLUTION_FILE }}
+
+    - name: Transpile SCSS files
+      uses: gha-utilities/sass-build@v0.2.3
+      with:
+        source: src/LostHarbor.Game/Styles/styles.scss
+        destination: src/LostHarbor.Game/wwwroot/css/styles.css
+
+    - name: Publish with .NET Core
+      run: dotnet publish --runtime wasm --configuration Release --output ${{ env.PUBLISH_DIR }} ${{ env.SOLUTION_FILE }}
+
+    - name: Create readme file
+      run: |
+        printf '%s\n' '# Lost Harbor ${{ env.TAG_NAME }}' '' 'This is a deployed release of Lost Harbor.' '' 'Source: https://github.com/lost-harbor/lost-harbor' '' 'Live Site: https://lost-harbor.space' '' > ${{ env.RELEASE_DIR }}/README.md
+
+    - name: Copy license file
+      run: |
+        cp LICENSE.md ${{ env.RELEASE_DIR }}/LICENSE.md
+
+    - name: Update version setting
+      run: |
+        sed -i 's/%%VERSION%%/${{ env.TAG_NAME }}/' ${{ env.RELEASE_DIR }}/settings.json
+
+    - name: Create release asset
+      run: |
+        cd build/wwwroot
+        zip -r ../../lost-harbor-${{ env.TAG_NAME }}.zip *
+        cd ../..
+
+    - name: Upload release asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ env.UPLOAD_URL }}
+        asset_path: ./lost-harbor-${{ env.TAG_NAME }}.zip
+        asset_name: lost-harbor-${{ env.TAG_NAME }}.zip
+        asset_content_type: application/zip
+
+    - name: Deploy to Github Pages
+      uses: JamesIves/github-pages-deploy-action@4.1.4
+      with:
+        token: ${{ secrets.DEPLOY_TOKEN }}
+        repository-name: ${{ env.REPOSITORY_NAME }}
+        commit-message: ${{ env.COMMIT_MESSAGE }}
+        branch: main
+        folder: ${{ env.RELEASE_DIR }}
+        clean: true
