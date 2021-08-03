@@ -10,4 +10,9 @@
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../LostHarbor.Core/LostHarbor.Core.csproj" />
+    <ProjectReference Include="../LostHarbor.UX/LostHarbor.UX.csproj" />
+  </ItemGroup>
+
 </Project>
