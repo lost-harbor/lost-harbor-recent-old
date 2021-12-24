@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace LostHarbor.Core.Extensions
@@ -11,6 +12,7 @@ namespace LostHarbor.Core.Extensions
         /// Determine if a Byte is an even number.
         /// </summary>
         /// <returns>True if the Byte is even; false otherwise.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsEven(this Byte number)
         {
             return number % 2 == 0;
@@ -20,6 +22,7 @@ namespace LostHarbor.Core.Extensions
         /// Determine if a Byte is an odd number.
         /// </summary>
         /// <returns>True if the Byte is an odd number; false otherwise.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsOdd(this Byte number)
         {
             return number % 2 != 0;
@@ -45,11 +48,13 @@ namespace LostHarbor.Core.Extensions
             return source != 1;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Boolean IsBetween(this Byte source, Byte minimum, Byte maximum)
         {
             return source >= minimum && source <= maximum;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Byte Clamp(this Byte source, Byte minimum, Byte maximum)
         {
             return Math.Max(Math.Min(source, maximum), minimum);

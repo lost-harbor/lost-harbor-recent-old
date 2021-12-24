@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LostHarbor.Core.Extensions
 {
@@ -26,6 +27,8 @@ namespace LostHarbor.Core.Extensions
         /// <returns></returns>
         public static int IndexOfMaxDouble(this IList<double> source)
         {
+            source.IndexOf(source.Max());
+
             if (source == null)
                 throw new ArgumentNullException("source");
             if (source.Count == 0)

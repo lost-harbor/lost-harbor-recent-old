@@ -4,7 +4,7 @@ namespace LostHarbor.Core.Movement
 {
     public interface IMovementResult
     {
-        float AngularVelocity { get; }
-        Vector<float> LinearVelocity { get; }
+        Quaternion AngularVelocity { get; }
+        Vector3 LinearVelocity { get; }
     }
 }

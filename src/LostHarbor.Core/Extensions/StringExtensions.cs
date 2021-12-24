@@ -46,26 +46,22 @@ namespace LostHarbor.Core.Extensions
             return String.IsNullOrEmpty(source) || source.Trim() == String.Empty;
         }
 
-        public static String Format(this String format, params object[] args)
-        {
-            return String.Format(format, args);
-        }
-
         public static String RemoveLastCharacter(this String value)
         {
-            return value.Substring(0, value.Length - 1);
+            return value[0..^1];
         }
+
         public static String RemoveLast(this String value, Int32 number)
         {
             return value.Substring(0, value.Length - number);
         }
         public static String RemoveFirstCharacter(this String value)
         {
-            return value.Substring(1);
+            return value[1..];
         }
         public static String RemoveFirst(this String value, Int32 number)
         {
-            return value.Substring(number);
+            return value[number..];
         }
 
         public static Int64 FileSize(this String filePath)
@@ -88,54 +84,21 @@ namespace LostHarbor.Core.Extensions
             try
             {
                 Byte[] inputBytes = Encoding.ASCII.GetBytes(value);
-                Byte[] hash;
-
-                switch (hashType)
+                var hash = hashType switch
                 {
-                    case HashType.HMAC:
-                        hash = HMAC.Create().ComputeHash(inputBytes);
-                        break;
-                    case HashType.HMACMD5:
-                        hash = HMACMD5.Create().ComputeHash(inputBytes);
-                        break;
-                    case HashType.HMACSHA1:
-                        hash = HMACSHA1.Create().ComputeHash(inputBytes);
-                        break;
-                    case HashType.HMACSHA256:
-                        hash = HMACSHA256.Create().ComputeHash(inputBytes);
-                        break;
-                    case HashType.HMACSHA384:
-                        hash = HMACSHA384.Create().ComputeHash(inputBytes);
-                        break;
-                    case HashType.HMACSHA512:
-                        hash = HMACSHA512.Create().ComputeHash(inputBytes);
-                        break;
-                    // case HashType.MACTripleDES:
-                    //     hash = MACTripleDES.Create().ComputeHash(inputBytes);
-                    //     break;
-                    case HashType.MD5:
-                        hash = MD5.Create().ComputeHash(inputBytes);
-                        break;
-                    // case HashType.RIPEMD160:
-                    //     hash = RIPEMD160.Create().ComputeHash(inputBytes);
-                    //     break;
-                    case HashType.SHA1:
-                        hash = SHA1.Create().ComputeHash(inputBytes);
-                        break;
-                    case HashType.SHA256:
-                        hash = SHA256.Create().ComputeHash(inputBytes);
-                        break;
-                    case HashType.SHA384:
-                        hash = SHA384.Create().ComputeHash(inputBytes);
-                        break;
-                    case HashType.SHA512:
-                        hash = SHA512.Create().ComputeHash(inputBytes);
-                        break;
-                    default:
-                        hash = inputBytes;
-                        break;
-                }
-
+                    HashType.HMAC => HMAC.Create().ComputeHash(inputBytes),
+                    HashType.HMACMD5 => HMACMD5.Create().ComputeHash(inputBytes),
+                    HashType.HMACSHA1 => HMACSHA1.Create().ComputeHash(inputBytes),
+                    HashType.HMACSHA256 => HMACSHA256.Create().ComputeHash(inputBytes),
+                    HashType.HMACSHA384 => HMACSHA384.Create().ComputeHash(inputBytes),
+                    HashType.HMACSHA512 => HMACSHA512.Create().ComputeHash(inputBytes),
+                    HashType.MD5 => MD5.Create().ComputeHash(inputBytes),
+                    HashType.SHA1 => SHA1.Create().ComputeHash(inputBytes),
+                    HashType.SHA256 => SHA256.Create().ComputeHash(inputBytes),
+                    HashType.SHA384 => SHA384.Create().ComputeHash(inputBytes),
+                    HashType.SHA512 => SHA512.Create().ComputeHash(inputBytes),
+                    _ => inputBytes,
+                };
                 StringBuilder hashString = new StringBuilder();
 
                 for (int i = 0; i < hash.Length; i++)

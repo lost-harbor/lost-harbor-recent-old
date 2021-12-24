@@ -57,7 +57,7 @@ namespace LostHarbor.Core.Browser
 
         public bool Set(string key, object value)
         {
-            if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(ERROR_INVALID_KEY);
+            if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key), ERROR_INVALID_KEY);
             if (_jsInProcessRuntime == null) throw new InvalidOperationException(ERROR_JS_RUNTIME);
 
             var eventArgs = OnStorageChanging(key, value);
@@ -69,7 +69,7 @@ namespace LostHarbor.Core.Browser
 
         public async Task<bool> SetAsync(string key, object value)
         {
-            if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(ERROR_INVALID_KEY);
+            if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key), ERROR_INVALID_KEY);
             if (_jsRuntime == null) throw new InvalidOperationException(ERROR_JS_RUNTIME);
 
             var eventArgs = await OnStorageChangingAsync(key, value);
@@ -81,7 +81,7 @@ namespace LostHarbor.Core.Browser
 
         public T Get<T>(string key)
         {
-            if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(ERROR_INVALID_KEY);
+            if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key), ERROR_INVALID_KEY);
             if (_jsInProcessRuntime == null) throw new InvalidOperationException(ERROR_JS_RUNTIME);
 
             return Deserialize<T>(JSGetItem(key));
@@ -89,7 +89,7 @@ namespace LostHarbor.Core.Browser
 
         public async Task<T> GetAsync<T>(string key)
         {
-            if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(ERROR_INVALID_KEY);
+            if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key), ERROR_INVALID_KEY);
             if (_jsRuntime == null) throw new InvalidOperationException(ERROR_JS_RUNTIME);
 
             return Deserialize<T>(await JSGetItemAsync(key));
@@ -97,14 +97,14 @@ namespace LostHarbor.Core.Browser
 
         public void Remove(string key)
         {
-            if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(ERROR_INVALID_KEY);
+            if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key), ERROR_INVALID_KEY);
             if (_jsInProcessRuntime == null) throw new InvalidOperationException(ERROR_JS_RUNTIME);
             JSRemoveItem(key);
         }
 
         public async Task RemoveAsync(string key)
         {
-            if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(ERROR_INVALID_KEY);
+            if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key), ERROR_INVALID_KEY);
             if (_jsRuntime == null) throw new InvalidOperationException(ERROR_JS_RUNTIME);
             await JSRemoveItemAsync(key);
         }
@@ -147,14 +147,14 @@ namespace LostHarbor.Core.Browser
 
         public bool Contains(string key)
         {
-            if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(ERROR_INVALID_KEY);
+            if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key), ERROR_INVALID_KEY);
             if (_jsInProcessRuntime == null) throw new InvalidOperationException(ERROR_JS_RUNTIME);
             return JSHasOwnProperty(key);
         }
 
         public async Task<bool> ContainsAsync(string key)
         {
-            if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(ERROR_INVALID_KEY);
+            if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key), ERROR_INVALID_KEY);
             if (_jsRuntime == null) throw new InvalidOperationException(ERROR_JS_RUNTIME);
             return await JSHasOwnPropertyAsync(key);
         }
@@ -179,7 +179,7 @@ namespace LostHarbor.Core.Browser
 
         private T Deserialize<T>(string value)
         {
-            if (string.IsNullOrWhiteSpace(value)) return default(T);
+            if (string.IsNullOrWhiteSpace(value)) return default;
             if (value.StartsWith("{") && value.EndsWith("}") ||
                 value.StartsWith("\"") && value.EndsWith("\"") ||
                 typeof(T) != typeof(string))

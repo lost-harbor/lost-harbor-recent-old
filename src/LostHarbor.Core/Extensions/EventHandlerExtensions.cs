@@ -22,6 +22,7 @@ namespace LostHarbor.Core.Extensions
 
         public static bool Raise<T>(this EventHandler<T> eventHandler, object sender, T e) where T : EventArgs
         {
+            eventHandler?.Invoke(sender, e);
             if (eventHandler != null)
             {
                 eventHandler.Invoke(sender, e);
